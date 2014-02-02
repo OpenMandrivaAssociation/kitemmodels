@@ -14,9 +14,7 @@ Group: System/Libraries
 BuildRequires: cmake
 BuildRequires: pkgconfig(Qt5Core)
 BuildRequires: qmake5
-BuildRequires: bzip2-devel
-BuildRequires: pkgconfig(liblzma)
-BuildRequires: pkgconfig(zlib)
+BuildRequires: extra-cmake-modules5
 
 %description
 The ItemModels framework contains data models on top of
