@@ -4,7 +4,7 @@
 %define debug_package %{nil}
 
 Name: kitemmodels
-Version: 4.99.0
+Version: 4.100.0
 Release: 1
 Source0: http://ftp5.gwdg.de/pub/linux/kde/unstable/frameworks/%{version}/%{name}-%{version}.tar.xz
 Summary: The KDE Frameworks 5 item model library
@@ -15,8 +15,6 @@ BuildRequires: cmake
 BuildRequires: pkgconfig(Qt5Core)
 BuildRequires: qmake5
 BuildRequires: extra-cmake-modules5
-# Required by cmake detection scripts
-BuildRequires: qt5-platformtheme-gtk2
 
 %description
 The ItemModels framework contains data models on top of
