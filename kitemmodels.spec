@@ -13,6 +13,7 @@ URL: http://kde.org/
 License: GPL
 Group: System/Libraries
 BuildRequires: cmake
+BuildRequires: ninja
 BuildRequires: pkgconfig(Qt5Core)
 BuildRequires: qmake5
 BuildRequires: extra-cmake-modules5
@@ -54,15 +55,14 @@ selectable items, recursive filtering and breadcrumb selection.
 
 %prep
 %setup -q
-%cmake
+%cmake -G Ninja \
+	-DKDE_INSTALL_USE_QT_SYS_PATHS:BOOL=ON
 
 %build
-%make -C build
+ninja -C build
 
 %install
-%makeinstall_std -C build
-mkdir -p %{buildroot}%{_libdir}/qt5
-mv %{buildroot}%{_prefix}/mkspecs %{buildroot}%{_libdir}/qt5
+DESTDIR="%{buildroot}" ninja -C build install
 
 %files -n %{libname}
 %{_libdir}/*.so.%{major}
