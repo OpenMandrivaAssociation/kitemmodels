@@ -6,7 +6,7 @@
 
 Name: kitemmodels
 Version: 5.6.0
-Release: 11
+Release: 1
 Source0: http://ftp5.gwdg.de/pub/linux/kde/%{stable}/frameworks/%(echo %{version} |cut -d. -f1-2)/%{name}-%{version}.tar.xz
 Summary: The KDE Frameworks 5 item model library
 URL: http://kde.org/
