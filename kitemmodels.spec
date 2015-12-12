@@ -15,6 +15,7 @@ Group: System/Libraries
 BuildRequires: cmake(ECM)
 BuildRequires: pkgconfig(Qt5Core)
 BuildRequires: pkgconfig(Qt5Test)
+BuildRequires: pkgconfig(Qt5QuickWidgets)
 
 %description
 The ItemModels framework contains data models on top of
