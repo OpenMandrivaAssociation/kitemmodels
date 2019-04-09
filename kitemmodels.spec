@@ -5,8 +5,8 @@
 %define stable %([ "`echo %{version} |cut -d. -f3`" -ge 80 ] && echo -n un; echo -n stable)
 
 Name: kitemmodels
-Version:	5.56.0
-Release:	2
+Version:	5.57.0
+Release:	1
 Source0: http://download.kde.org/%{stable}/frameworks/%(echo %{version} |cut -d. -f1-2)/%{name}-%{version}.tar.xz
 Summary: The KDE Frameworks 5 item model library
 URL: http://kde.org/
@@ -15,7 +15,17 @@ Group: System/Libraries
 BuildRequires: cmake(ECM)
 BuildRequires: pkgconfig(Qt5Core)
 BuildRequires: pkgconfig(Qt5Test)
+BuildRequires: pkgconfig(Qt5Network)
+BuildRequires: pkgconfig(Qt5Qml)
+BuildRequires: pkgconfig(Qt5Quick)
 BuildRequires: pkgconfig(Qt5QuickWidgets)
+# For Python bindings
+BuildRequires: cmake(PythonModuleGeneration)
+BuildRequires: pkgconfig(python3)
+BuildRequires: python-qt5-core
+# For QCH format docs
+BuildRequires: qt5-assistant
+
 
 %description
 The ItemModels framework contains data models on top of
@@ -52,9 +62,24 @@ and filtering.
 ItemModels contains useful classes such as a model for checkable or
 selectable items, recursive filtering and breadcrumb selection.
 
+%package -n %{name}-devel-docs
+Summary: Developer documentation for %{name} for use with Qt Assistant
+Group: Documentation
+Suggests: %{devname} = %{EVRD}
+
+%description -n %{name}-devel-docs
+Developer documentation for %{name} for use with Qt Assistant
+
+%package -n python-%{name}
+Summary: Python bindings for %{name}
+Group: System/Libraries
+Requires: %{libname} = %{EVRD}
+
+%description -n python-%{name}
+Python bindings for %{name}
+
 %prep
-%setup -q
-%apply_patches
+%autosetup -p1
 %cmake_kde5
 
 %build
@@ -62,6 +87,7 @@ selectable items, recursive filtering and breadcrumb selection.
 
 %install
 %ninja_install -C build
+[ -s %{buildroot}%{python_sitearch}/PyKF5/__init__.py ] || rm -f %{buildroot}%{python_sitearch}/PyKF5/__init__.py
 
 %files -n %{libname}
 %{_libdir}/*.so.%{major}
@@ -73,3 +99,12 @@ selectable items, recursive filtering and breadcrumb selection.
 %{_libdir}/*.so
 %{_libdir}/cmake/KF5ItemModels
 %{_libdir}/qt5/mkspecs/modules/*
+
+%files -n %{name}-devel-docs
+%{_docdir}/qt5/*.{tags,qch}
+
+%files -n python-%{name}
+%dir %{python_sitearch}/PyKF5
+%{python_sitearch}/PyKF5/KItemModels.so
+%dir %{_datadir}/sip/PyKF5
+%{_datadir}/sip/PyKF5/KItemModels
