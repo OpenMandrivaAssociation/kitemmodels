@@ -25,6 +25,7 @@ BuildRequires: pkgconfig(python3)
 BuildRequires: python-qt5-core
 # For QCH format docs
 BuildRequires: qt5-assistant
+BuildRequires: doxygen
 
 
 %description
