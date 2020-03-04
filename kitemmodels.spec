@@ -24,6 +24,7 @@ BuildRequires: cmake(PythonModuleGeneration)
 BuildRequires: pkgconfig(python3)
 BuildRequires: python-qt5-core
 BuildRequires: python-sip-qt5
+BuildRequires: python-qt5-devel
 # For QCH format docs
 BuildRequires: qt5-assistant
 BuildRequires: doxygen
