@@ -4,7 +4,7 @@
 %define stable %([ "`echo %{version} |cut -d. -f3`" -ge 80 ] && echo -n un; echo -n stable)
 
 Name: kitemmodels
-Version:	5.91.0
+Version:	5.92.0
 Release:	1
 Source0: http://download.kde.org/%{stable}/frameworks/%(echo %{version} |cut -d. -f1-2)/%{name}-%{version}.tar.xz
 Summary: The KDE Frameworks 5 item model library
@@ -18,12 +18,11 @@ BuildRequires: pkgconfig(Qt5Network)
 BuildRequires: pkgconfig(Qt5Qml)
 BuildRequires: pkgconfig(Qt5Quick)
 BuildRequires: pkgconfig(Qt5QuickWidgets)
-# For Python bindings
-BuildRequires: cmake(PythonModuleGeneration)
-BuildRequires: pkgconfig(python3)
 # For QCH format docs
 BuildRequires: qt5-assistant
 BuildRequires: doxygen
+# No more python bindings in 5.92
+Obsoletes: python-%{name} < %{EVRD}
 
 
 %description
@@ -69,14 +68,6 @@ Suggests: %{devname} = %{EVRD}
 %description -n %{name}-devel-docs
 Developer documentation for %{name} for use with Qt Assistant
 
-%package -n python-%{name}
-Summary: Python bindings for %{name}
-Group: System/Libraries
-Requires: %{libname} = %{EVRD}
-
-%description -n python-%{name}
-Python bindings for %{name}
-
 %prep
 %autosetup -p1
 %cmake_kde5
@@ -86,10 +77,6 @@ Python bindings for %{name}
 
 %install
 %ninja_install -C build
-[ -s %{buildroot}%{python_sitearch}/PyKF5/__init__.py ] || rm -f %{buildroot}%{python_sitearch}/PyKF5/__init__.py
-
-# Let's not ship py2 crap unless and until something still needs it...
-rm -rf %{buildroot}%{_libdir}/python2*
 
 %files -n %{libname}
 %{_libdir}/*.so.%{major}
@@ -106,9 +93,3 @@ rm -rf %{buildroot}%{_libdir}/python2*
 
 %files -n %{name}-devel-docs
 %{_docdir}/qt5/*.{tags,qch}
-
-%files -n python-%{name}
-%dir %{python_sitearch}/PyKF5
-%{python_sitearch}/PyKF5/KItemModels.so
-%dir %{_datadir}/sip/PyKF5
-%{_datadir}/sip/PyKF5/KItemModels
