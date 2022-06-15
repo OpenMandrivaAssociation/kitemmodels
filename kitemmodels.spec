@@ -5,7 +5,7 @@
 
 Name: kitemmodels
 Version:	5.95.0
-Release:	1
+Release:	2
 Source0: http://download.kde.org/%{stable}/frameworks/%(echo %{version} |cut -d. -f1-2)/%{name}-%{version}.tar.xz
 Summary: The KDE Frameworks 5 item model library
 URL: http://kde.org/
@@ -18,12 +18,12 @@ BuildRequires: pkgconfig(Qt5Network)
 BuildRequires: pkgconfig(Qt5Qml)
 BuildRequires: pkgconfig(Qt5Quick)
 BuildRequires: pkgconfig(Qt5QuickWidgets)
+BuildRequires: pkgconfig(Qt5Script)
 # For QCH format docs
 BuildRequires: qt5-assistant
 BuildRequires: doxygen
 # No more python bindings in 5.92
 Obsoletes: python-%{name} < %{EVRD}
-
 
 %description
 The ItemModels framework contains data models on top of
